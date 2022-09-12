@@ -1,0 +1,46 @@
+{
+  "Medicices": [
+    {
+      "id": 432,
+      "name": "bhumi",
+      "price": "78",
+      "quntity": "500",
+      "expiry": "2025"
+    },
+    {
+      "id": 11,
+      "name": "ABCD",
+      "price": "20",
+      "quntity": "500",
+      "expiry": "2021"
+    },
+    {
+      "id": 140,
+      "name": "bhumi123456",
+      "price": "89",
+      "quntity": "600",
+      "expiry": "2023"
+    }
+  ],
+  "Patients": [
+    {
+      "id": 3,
+      "name": "H123",
+      "message": "fvfhvgh cdhv",
+      "date": "2025-01-02"
+    },
+    {
+      "id": 4,
+      "name": "MNP456",
+      "message": "fvfhvgh cdhv",
+      "date": "20201-12-12"
+    },
+    {
+      "id": 2039,
+      "name": "D",
+      "message": "dbhedgfdyehgfr",
+      "date": "2022-09-02"
+    }
+  ],
+  "doctors": []
+}

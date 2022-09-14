@@ -1,27 +1,5 @@
 {
-  "Medicices": [
-    {
-      "id": 432,
-      "name": "bhumi",
-      "price": "78",
-      "quntity": "500",
-      "expiry": "2025"
-    },
-    {
-      "id": 11,
-      "name": "ABCD",
-      "price": "20",
-      "quntity": "500",
-      "expiry": "2021"
-    },
-    {
-      "id": 140,
-      "name": "bhumi123456",
-      "price": "89",
-      "quntity": "600",
-      "expiry": "2023"
-    }
-  ],
+  "Medicices": [],
   "Patients": [
     {
       "id": 3,

@@ -64,21 +64,6 @@ function Doctors(props) {
     const { handleBlur, handleChange, handleSubmit, errors, touched, values,setFieldValue } = formik;
 
     const handleInsert = (values) => {
-        // let localData = JSON.parse(localStorage.getItem("doctors"));
-
-        // let id = Math.floor(Math.random() * 10000);
-
-        // let data = {
-        //     id: id,
-        //     ...values
-        // }
-
-        // if (localData === null) {
-        //     localStorage.setItem("doctors", JSON.stringify([data]))
-        // } else {
-        //     localData.push(data);
-        //     localStorage.setItem("doctors", JSON.stringify(localData))
-        // }
         // console.log(data);  
         dispatch(addDoctorsData(values));
         console.log(values);
@@ -92,12 +77,20 @@ function Doctors(props) {
         { field: 'name', headerName: 'name', width: 170 },
         { field: 'email', headerName: 'email', width: 250 },
         { field: 'phone', headerName: 'phone', width: 170 },
+        { 
+            field: 'prof_img', 
+            headerName: 'Profile Image', 
+            width: 170 ,
+            renderCell : (params) => (
+                <img src={params.row.prof_img} width={50} height={50}/>
+            )
+        },
         {
             field: "action",
             headerName: "Action",
             renderCell: (params) => (
                 <>
-                    <IconButton aria-label="delete" onClick={() => { handleDClickOpen(); setDid(params.id) }}>
+                    <IconButton aria-label="delete" onClick={() => { handleDClickOpen(); setDid(params) }}>
                         <DeleteIcon />
                     </IconButton>
                     <IconButton aria-label="delete" onClick={() => handleEdit(params)}>
@@ -109,11 +102,6 @@ function Doctors(props) {
     ];
 
     const handleDelete = (params) => {
-        // let localData = JSON.parse(localStorage.getItem("doctors"));
-
-        // let fData = localData.filter((d) => d.id !== did);
-
-        // localStorage.setItem("doctors", JSON.stringify(fData));
         dispatch(deleteDotorsData(did));
         // console.log(fData);
         LoadData();
@@ -128,18 +116,6 @@ function Doctors(props) {
     }
 
     const handleClickUpdate = (values) => {
-        // let localData = JSON.parse(localStorage.getItem("doctors"));
-
-        // let uData = localData.map((u) => {
-        //     if (u.id === values.id) {
-        //         return values;
-        //     } else {
-        //         return u;
-        //     }
-        // })
-        // console.log(uData);
-        // localStorage.setItem("doctors", JSON.stringify(uData));
-
         dispatch(updateDotoreData(values));
         handleClose();
         LoadData();
@@ -171,11 +147,9 @@ function Doctors(props) {
     const doctors = useSelector(state => state.doctors);
 
     useEffect(() => {
-        // LoadData();
         dispatch(getDoctorsData());
     }, [])
 
-    // console.log(errors);
 
 
     return (

@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { addDoc, collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../firebase";
 import * as ActionType from '../ActionType';
 
@@ -10,7 +10,6 @@ export const getDoctorsData = () => async (dispatch) => {
         let data = [];
         querySnapshot.forEach((doc) => {
             data.push({ id: doc.id, ...doc.data() })
-            // console.log(`${doc.id} => ${doc.data()}`);
             // console.log(data);
         });
         dispatch({ type: ActionType.GET_DOCTORSDATA, payload: data })
@@ -21,20 +20,24 @@ export const getDoctorsData = () => async (dispatch) => {
 
 export const addDoctorsData = (data) => async (dispatch) => {
     try {
-        const DoctorsRef = ref(storage, 'Doctors/' + data.prof_img.name);
+
+        let radomNum = Math.floor(Math.random() * 1000000).toString();
+
+        const DoctorsRef = ref(storage, 'Doctors/' + radomNum);
         uploadBytes(DoctorsRef, data.prof_img)
             .then((snapshot) => {
                 getDownloadURL(ref(storage, snapshot.ref))
                     .then(async (url) => {
                         const docRef = await addDoc(collection(db, "Doctors"), {
                             ...data,
-                            prof_img: url
+                            prof_img: url,
+                            fileName: radomNum
                         });
                         dispatch({
                             type: ActionType.ADD_DOCTORSDATA, payload: {
                                 id: docRef.id,
                                 ...data,
-                                prof_img : url
+                                prof_img: url
                             }
                         })
                     });
@@ -45,11 +48,18 @@ export const addDoctorsData = (data) => async (dispatch) => {
     }
 }
 
-export const deleteDotorsData = (id) => async (dispatch) => {
+export const deleteDotorsData = (data) => async (dispatch) => {
     try {
-        await deleteDoc(doc(db, "Doctors", id));
-        console.log(id);
-        dispatch({ type: ActionType.DELETE_DOCTORSDATA, payload: id })
+        console.log(data.row);
+        const deletetRef = ref(storage, "Doctors/" + data.row.fileName);
+
+        deleteObject(deletetRef)
+            .then(async () => {
+                await deleteDoc(doc(db, "Doctors", data.id));
+                dispatch({ type: ActionType.DELETE_DOCTORSDATA, payload: data.id })
+            }).catch((error) => {
+                dispatch(error_doctors(error.message))
+            });
     } catch (error) {
         dispatch(error_doctors(error.message))
     }

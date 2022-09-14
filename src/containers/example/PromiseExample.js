@@ -14,12 +14,6 @@ function PromiseExample(props) {
             }, 2000);
         })
         return promise;
-
-        // return promise;
-
-        //    setTimeout(() => {
-        //         return 'two';
-        //    }, 2000);
     }
 
     const three = () => {
